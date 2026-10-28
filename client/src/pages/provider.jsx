@@ -31,7 +31,9 @@ function Provider() {
 
   const loadServices = async () => {
     try {
-      const response = await fetch('${import.meta.env.VITE_API_URL}/api/services');
+      
+const response = await fetch(`${import.meta.env.VITE_API_URL}/api/services`);
+
       const data = await response.json();
 
       if (!response.ok) {
