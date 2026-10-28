@@ -57,7 +57,9 @@ function Services() {
         setLoading(true);
         setError('');
 
-        const response = await fetch();
+        
+const response = await fetch(`${import.meta.env.VITE_API_URL}/api/services`);
+
         const data = await response.json();
 
         if (!response.ok) {
