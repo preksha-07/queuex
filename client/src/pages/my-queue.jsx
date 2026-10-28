@@ -23,7 +23,7 @@ function MyQueue() {
       setError('');
 
       const response = await fetch(
-        'http://localhost:5000/api/queue/my',
+        `${import.meta.env.VITE_API_URL}/api/queue/my`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -70,7 +70,7 @@ function MyQueue() {
       setMessage('');
 
       const response = await fetch(
-        `http://localhost:5000/api/queue/${entryId}/cancel`,
+        `${import.meta.env.VITE_API_URL}/api/queue/${entryId}/cancel`,
         {
           method: 'PATCH',
           headers: {

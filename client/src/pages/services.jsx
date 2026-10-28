@@ -57,7 +57,7 @@ function Services() {
         setLoading(true);
         setError('');
 
-        const response = await fetch('http://localhost:5000/api/services');
+        const response = await fetch();
         const data = await response.json();
 
         if (!response.ok) {
@@ -97,7 +97,7 @@ function Services() {
       setBookingMessage('');
 
       const response = await fetch(
-        `http://localhost:5000/api/queue/join/${selectedService._id}`,
+        `${import.meta.env.VITE_API_URL}/api/queue/join/${selectedService._id}`,
         {
           method: 'POST',
           headers: {

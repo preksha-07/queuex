@@ -46,10 +46,10 @@ function Admin() {
 
     try {
       const [usersResponse, servicesResponse] = await Promise.all([
-        fetch('http://localhost:5000/api/admin/users', {
+        fetch('${import.meta.env.VITE_API_URL}/api/admin/users', {
           headers,
         }),
-        fetch('http://localhost:5000/api/services'),
+        fetch('${import.meta.env.VITE_API_URL}/api/services'),
       ]);
 
       const usersData = await usersResponse.json();
@@ -101,8 +101,8 @@ function Admin() {
 
     const editing = Boolean(editingId);
     const url = editing
-      ? `http://localhost:5000/api/services/${editingId}`
-      : 'http://localhost:5000/api/services';
+      ? `${import.meta.env.VITE_API_URL}/api/services/${editingId}`
+      : '${import.meta.env.VITE_API_URL}/api/services';
 
     try {
       const response = await fetch(url, {

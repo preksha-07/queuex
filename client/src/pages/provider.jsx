@@ -31,7 +31,7 @@ function Provider() {
 
   const loadServices = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/services');
+      const response = await fetch('${import.meta.env.VITE_API_URL}/api/services');
       const data = await response.json();
 
       if (!response.ok) {
@@ -57,7 +57,7 @@ function Provider() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/queue/service/${serviceId}`,
+        `${import.meta.env.VITE_API_URL}/api/queue/service/${serviceId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -88,7 +88,7 @@ function Provider() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/queue/service/${selectedService}/next`,
+        `${import.meta.env.VITE_API_URL}/api/queue/service/${selectedService}/next`,
         {
           method: 'PATCH',
           headers: {
@@ -116,7 +116,7 @@ function Provider() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/queue/${entryId}/status`,
+        `${import.meta.env.VITE_API_URL}/api/queue/${entryId}/status`,
         {
           method: 'PATCH',
           headers: {
