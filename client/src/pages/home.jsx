@@ -4,13 +4,23 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 
 function Home() {
+  const getStoredUser = () => {
+    try {
+      return JSON.parse(localStorage.getItem('queuexUser') || 'null');
+    } catch {
+      return null;
+    }
+  };
+
   const [isLoggedIn, setIsLoggedIn] = useState(
     () => Boolean(localStorage.getItem('queuexToken'))
   );
+  const [user, setUser] = useState(getStoredUser);
 
   useEffect(() => {
     const updateLoginState = () => {
       setIsLoggedIn(Boolean(localStorage.getItem('queuexToken')));
+      setUser(getStoredUser());
     };
 
     window.addEventListener('focus', updateLoginState);
@@ -32,8 +42,11 @@ function Home() {
     localStorage.removeItem('queuexToken');
     localStorage.removeItem('queuexUser');
     setIsLoggedIn(false);
+    setUser(null);
     window.location.href = '/';
   };
+
+  const role = user?.role?.toUpperCase();
 
   return (
     <div className="app">
@@ -54,9 +67,23 @@ function Home() {
         <div className="nav-actions">
           {isLoggedIn ? (
             <>
-              <Link to="/my-queue" className="login-link">
-                My Queue
-              </Link>
+              {role === 'USER' && (
+                <Link to="/my-queue" className="login-link">
+                  My Queue
+                </Link>
+              )}
+
+              {(role === 'PROVIDER' || role === 'ADMIN') && (
+                <Link to="/provider" className="login-link">
+                  Provider Dashboard
+                </Link>
+              )}
+
+              {role === 'ADMIN' && (
+                <Link to="/admin" className="login-link">
+                  Admin Dashboard
+                </Link>
+              )}
 
               <button
                 type="button"
@@ -72,10 +99,26 @@ function Home() {
                 Log out
               </button>
 
-              <Link to="/my-queue" className="nav-button">
-                View my tokens
-                <i className="fa-solid fa-arrow-right"></i>
-              </Link>
+              {role === 'USER' && (
+                <Link to="/my-queue" className="nav-button">
+                  View my tokens
+                  <i className="fa-solid fa-arrow-right"></i>
+                </Link>
+              )}
+
+              {role === 'PROVIDER' && (
+                <Link to="/provider" className="nav-button">
+                  Open dashboard
+                  <i className="fa-solid fa-arrow-right"></i>
+                </Link>
+              )}
+
+              {role === 'ADMIN' && (
+                <Link to="/admin" className="nav-button">
+                  Open dashboard
+                  <i className="fa-solid fa-arrow-right"></i>
+                </Link>
+              )}
             </>
           ) : (
             <>
